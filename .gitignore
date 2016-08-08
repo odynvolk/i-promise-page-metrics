@@ -1,0 +1,24 @@
+# Dependency directory and npm log
+node_modules
+bundle/
+build/
+
+npm-debug.log
+
+# Code coverage results
+/coverage
+
+# Built package
+/*.tgz
+
+# Project files
+.tern-port
+.tern-project
+.idea
+*.iml
+typings
+
+# OS X
+.DS_Store
+
+.vscode/
