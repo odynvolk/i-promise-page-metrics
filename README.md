@@ -1,7 +1,7 @@
 # i-promise-page-metrics
 > A node module for retrieving different page metrics for an URL
 
-For those of you who want to get page metrics for different URLs. This module will supply you with `Facebook` and `Google+` metrics.
+For those of you who want to get page metrics for different URLs. This module will supply you with `Facebook`, `Google+` and `Moz metrics.
 
 ## Install
 
@@ -27,7 +27,12 @@ pageMetrics.googleplus(url)
     //=> {count: 66}
   });
 
-```
+pageMetrics.moz(url)
+  .then((response) => {
+    //=> {da: 1, pa: 22, rank: 2, links: 100}
+  });
+
+````
 
 ## Running tests
 

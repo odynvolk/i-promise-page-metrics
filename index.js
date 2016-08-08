@@ -1,5 +1,6 @@
 "use strict";
 
+const cheerio = require("cheerio");
 const rp = require("request-promise");
 
 module.exports = {
@@ -33,5 +34,26 @@ module.exports = {
     }).then((data) => {
       return data.result.metadata.globalCounts;
     });
+  },
+
+  moz: (url) => {
+    return rp.post({
+      url: "http://www.checkmoz.com/",
+      form: {
+        "f_urls": url
+      }
+    }).then((data) => {
+      const $ = cheerio.load(data);
+
+      const metricsRow = $(".rowclass1 td");
+
+      return {
+        da: $(metricsRow[1]).text(),
+        pa: $(metricsRow[2]).text(),
+        ranks: $(metricsRow[3]).text(),
+        links: $(metricsRow[4]).text()
+      };
+    });
   }
+
 };

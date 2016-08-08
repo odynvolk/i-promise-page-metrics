@@ -1,9 +1,10 @@
 {
   "name": "i-promise-page-metrics",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "license": "MIT",
   "description": "Fetches different page metrics for a given URL",
   "dependencies": {
+    "cheerio": "^0.20.0",
     "request": "^2.60.0",
     "request-promise": "^4.1.1"
   },
