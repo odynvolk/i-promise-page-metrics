@@ -46,9 +46,12 @@ module.exports = {
 
   moz: (url, proxy) => {
     const opts = {
-      url: "http://www.checkmoz.com/",
+      url: "http://www.checkmoz.com/moz-metrics/index_ajax.php",
       form: {
-        "f_urls": url
+        "enter_url": url,
+        "checks1": "68719476736",
+        "checks2": "34359738368",
+        "checks3": "16384"
       }
     };
     if (proxy) opts.proxy = proxy;
@@ -56,13 +59,13 @@ module.exports = {
     return rp.post(opts)
       .then((data) => {
         const $ = cheerio.load(data);
-        const metricsRow = $(".rowclass1 td");
+        const tds = $("td");
 
         return {
-          da: $(metricsRow[1]).text(),
-          pa: $(metricsRow[2]).text(),
-          ranks: $(metricsRow[3]).text(),
-          links: $(metricsRow[4]).text()
+          da: $(tds[3]).text(),
+          pa: $(tds[5]).text(),
+          ranks: $(tds[7]).text(),
+          links: $(tds[19]).text()
         };
       });
   }
