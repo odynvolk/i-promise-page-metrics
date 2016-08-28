@@ -46,12 +46,11 @@ module.exports = {
 
   moz: (url, proxy) => {
     const opts = {
-      url: "http://www.checkmoz.com/moz-metrics/index_ajax.php",
+      url: "http://www.checkmoz.com/moz-metrics/ajax.php",
       form: {
         "enter_url": url,
         "checks1": "68719476736",
-        "checks2": "34359738368",
-        "checks3": "16384"
+        "checks2": "34359738368"
       }
     };
     if (proxy) opts.proxy = proxy;
@@ -62,10 +61,10 @@ module.exports = {
         const tds = $("td");
 
         return {
-          da: $(tds[3]).text(),
-          pa: $(tds[5]).text(),
-          ranks: $(tds[7]).text(),
-          links: $(tds[19]).text()
+          da: $(tds[3]).text().trim() || 0,
+          pa: $(tds[5]).text().trim() || 0,
+          ranks: $(tds[9]).text().trim() || 0,
+          links: $(tds[11]).text().trim() || 0
         };
       });
   }

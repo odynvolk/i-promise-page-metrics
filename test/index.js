@@ -31,7 +31,7 @@ describe("i promise page metrics", () => {
       .then((response) => {
         response.da.should.be.above(10);
         response.pa.should.be.above(10);
-        response.ranks.should.be.above(1);
+        response.ranks.should.equal(0);
         response.links.should.be.above(100);
 
         done();
