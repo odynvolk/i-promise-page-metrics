@@ -5,19 +5,7 @@ const pageMetrics = require("../index.js");
 describe("i promise page metrics", () => {
   const url = "https://npmjs.com";
 
-  it("should return facebook data", (done) => {
-    pageMetrics.facebook(url)
-      .then((response) => {
-        response.total_count.should.be.above(280);
-        response.like_count.should.be.above(90);
-        response.comment_count.should.be.above(50);
-        response.share_count.should.be.above(130);
-
-        done();
-      });
-  });
-
-  it("should return google+ data", (done) => {
+  it("should return googleplus data", (done) => {
     pageMetrics.googleplus(url)
       .then((response) => {
         response.count.should.be.above(-1);
@@ -29,9 +17,9 @@ describe("i promise page metrics", () => {
   it("should return moz data", (done) => {
     pageMetrics.moz(url)
       .then((response) => {
-        response.da.should.be.above(10);
-        response.pa.should.be.above(10);
-        response.ranks.should.equal(0);
+        response.da.should.be.above(70);
+        response.pa.should.be.above(60);
+        response.ranks.should.be.above(5);
         response.links.should.be.above(100);
 
         done();

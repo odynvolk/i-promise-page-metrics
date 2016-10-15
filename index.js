@@ -3,20 +3,9 @@
 const cheerio = require("cheerio");
 const rp = require("request-promise");
 
+let checkMozCookie;
+
 module.exports = {
-
-  facebook: (url, proxy) => {
-    const opts = {
-      uri: `https://api.facebook.com/method/fql.query?&format=json&query=select%20total_count,like_count,comment_count,share_count,click_count%20from%20link_stat%20where%20url="${encodeURIComponent(url)}"`,
-      json: true
-    };
-    if (proxy) opts.proxy = proxy;
-
-    return rp(opts)
-      .then((data) => {
-        return data[0];
-      });
-  },
 
   googleplus: (url, proxy) => {
     const opts = {
@@ -45,12 +34,36 @@ module.exports = {
   },
 
   moz: (url, proxy) => {
+    if (checkMozCookie) {
+      return module.exports.mozValues(url, proxy, checkMozCookie);
+    } else {
+      return module.exports.mozCookie(proxy).then(cookie => module.exports.mozValues(url, proxy, cookie));
+    }
+  },
+
+  mozCookie: (proxy) => {
     const opts = {
-      url: "http://www.checkmoz.com/moz-metrics/ajax.php",
+      url: "http://www.checkmoz.com/",
+      resolveWithFullResponse: true
+    };
+    if (proxy) opts.proxy = proxy;
+
+    return rp.get(opts)
+      .then((data) => {
+        checkMozCookie = data.headers["set-cookie"];
+
+        return checkMozCookie;
+      });
+  },
+
+  mozValues: (url, proxy, cookie) => {
+    const opts = {
+      url: "http://www.checkmoz.com/",
+      headers: {
+        Cookie: cookie
+      },
       form: {
-        "enter_url": url,
-        "checks1": "68719476736",
-        "checks2": "34359738368"
+        "f_urls": url
       }
     };
     if (proxy) opts.proxy = proxy;
@@ -58,15 +71,14 @@ module.exports = {
     return rp.post(opts)
       .then((data) => {
         const $ = cheerio.load(data);
-        const tds = $("td");
+        const tds = $(".rowclass1 td");
 
         return {
-          da: $(tds[3]).text().trim() || 0,
-          pa: $(tds[5]).text().trim() || 0,
-          ranks: $(tds[9]).text().trim() || 0,
-          links: $(tds[11]).text().trim() || 0
+          da: $(tds[1]).text().trim() || 0,
+          pa: $(tds[2]).text().trim() || 0,
+          ranks: $(tds[3]).text().trim() || 0,
+          links: $(tds[4]).text().trim() || 0
         };
       });
   }
-
 };
