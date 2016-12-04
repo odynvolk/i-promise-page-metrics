@@ -38,7 +38,7 @@ module.exports = {
   mozValues: (url, proxy) => {
     const cleanUrl = url.replace("http://", "").replace("https://", "");
     const opts = {
-      url: `https://www.checkprg.com/lib/multipr-process.html?u=${cleanUrl}`
+      url: `http://www.checkprg.com/lib/multipr-process.html?u=${cleanUrl}`
     };
     if (proxy) opts.proxy = proxy;
 

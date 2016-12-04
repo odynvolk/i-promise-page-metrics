@@ -1,6 +1,6 @@
 {
   "name": "i-promise-page-metrics",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "description": "Fetches different page metrics for a given URL",
   "dependencies": {
