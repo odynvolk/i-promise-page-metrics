@@ -1,7 +1,7 @@
 # i-promise-page-metrics
 > A node module for retrieving different page metrics for an URL
 
-For those of you who want to get page metrics for different URLs. This module will supply you with `Google+` and `Moz metrics.
+For those of you who want to get page metrics for different URLs. This module will supply you with `Google+` and `Moz metrics`.
 
 ## Install
 
