@@ -5,6 +5,31 @@ const rp = require("request-promise");
 
 module.exports = {
 
+  alexa: (url, proxy) => {
+    const cleanUrl = url.replace("http://", "").replace("https://", "");
+    const opts = {
+      uri: "https://theseotools.net/alexa-rank-checker/output",
+      form: {
+        url: cleanUrl,
+        submit: "Submit"
+      }
+    };
+    if (proxy) opts.proxy = proxy;
+
+    return rp.post(opts)
+      .then((data) => {
+        const $ = cheerio.load(data);
+        const table = $(".table-bordered tbody");
+
+        return {
+          globalRank: $($("td", $("tr", table)[1])[1]).text().trim() || 0,
+          popularityAt: $($("td", $("tr", table)[2])[1]).text().trim() || 0,
+          regionalRank: $($("td", $("tr", table)[3])[1]).text().trim() || 0,
+          backLinks: $($("td", $("tr", table)[4])[1]).text().trim() || 0
+        };
+      });
+  },
+
   googleplus: (url, proxy) => {
     const opts = {
       url: "https://clients6.google.com/rpc",

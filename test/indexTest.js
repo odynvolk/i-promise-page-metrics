@@ -7,9 +7,26 @@ const pageMetrics = require("../index");
 
 const checkPrg = fs.readFileSync("./test/data/check-prg-response.html", "utf8");
 const googlePlus = require("./data/google-plus-response.json");
+const seoToolsAlexa = fs.readFileSync("./test/data/seotools-alexa-response.html", "utf8");
 
 describe("i promise page metrics", () => {
   const url = "https://npmjs.com";
+
+  it("should return alexa data", (done) => {
+    nock("https://theseotools.net")
+      .post("/alexa-rank-checker/output")
+      .reply(200, seoToolsAlexa);
+
+    pageMetrics.alexa(url)
+      .then((response) => {
+        response.globalRank.should.be.above(1000);
+        response.popularityAt.should.equal("United States");
+        response.regionalRank.should.be.above(1400);
+        response.backLinks.should.be.above(200);
+
+        done();
+      });
+  });
 
   it("should return googleplus data", (done) => {
     nock("https://clients6.google.com")

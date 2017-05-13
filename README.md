@@ -1,7 +1,7 @@
 # i-promise-page-metrics
 > A node module for retrieving different page metrics for an URL
 
-For those of you who want to get page metrics for different URLs. This module will supply you with `Google+` and `Moz metrics`.
+For those of you who want to get page metrics for different URLs. This module will supply you with `Alexa`, `Google+` and `Moz` metrics.
 
 ## Install
 
@@ -16,6 +16,11 @@ $ npm i-promise-page-metrics --save
 ```js
 
 const pageMetrics = require("i-promise-page-metrics");
+
+pageMetrics.alexa(url)
+  .then((response) => {
+    //=> {globalRank: 1000, popularityAt: "United States", regionalRank: 200, backLinks: 5000}
+  });
 
 pageMetrics.googleplus(url)
   .then((response) => {
@@ -48,4 +53,3 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 ## License
 
 Released under the MIT license.
-
