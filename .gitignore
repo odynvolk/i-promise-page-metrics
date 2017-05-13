@@ -22,3 +22,5 @@ typings
 .DS_Store
 
 .vscode/
+
+test.js

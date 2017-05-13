@@ -14,10 +14,14 @@
     "coffee-script": "^1.10.0",
     "eslint": "^2.13.1",
     "mocha": "^2.5.3",
-    "mocha-cakes-2": "^1.1.1"
+    "mocha-cakes-2": "^1.1.1",
+    "nock": "^9.0.13"
   },
-  "repository": "odynvolk/i-promise-page-metrics",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odynvolk/i-promise-page-metrics.git"
+  },
   "scripts": {
-    "test": "mocha && eslint ."
+    "test": "mocha && eslint . --cache"
   }
 }
